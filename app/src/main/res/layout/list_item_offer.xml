@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/offer_item_merchant_logo"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/offer_item_featured_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/offer_item_exclusive"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/offer_item_merchant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@null"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/offer_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@null"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
