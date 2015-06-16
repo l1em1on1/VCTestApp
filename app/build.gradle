@@ -33,6 +33,9 @@ android {
         debug {
             signingConfig signingConfigs.test;
             manifestPlaceholders = [mapApiKey: 'AIzaSyDrtbG2rA5D9tmzGTbm1c1cRUUtGVqVRYk']
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             signingConfig signingConfigs.test;
@@ -56,4 +59,5 @@ dependencies {
 
     compile 'com.fasterxml.jackson.core:jackson-databind:2.5.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.5.4'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.4'
 }
