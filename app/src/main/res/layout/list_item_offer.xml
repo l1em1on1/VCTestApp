@@ -9,6 +9,7 @@
         android:id="@+id/offer_item_merchant_logo"
         android:layout_weight="1"
         android:layout_width="0dp"
+        android:adjustViewBounds="true"
         android:layout_height="wrap_content" />
 
     <RelativeLayout

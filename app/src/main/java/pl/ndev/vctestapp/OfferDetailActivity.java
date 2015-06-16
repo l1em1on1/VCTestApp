@@ -16,7 +16,7 @@ public class OfferDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.offer_detail_container, OfferDetailFragment.newInstance(getIntent().getStringExtra(OfferDetailFragment.ARG_ITEM_ID)))
                     .commit();
         }
@@ -30,5 +30,14 @@ public class OfferDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

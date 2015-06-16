@@ -1,85 +1,98 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:padding="16dp"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    tools:context=".OfferDetailFragment">
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <LinearLayout android:padding="16dp"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        tools:context=".OfferDetailFragment">
 
-        <ImageView
-            android:id="@+id/offer_item_merchant_logo"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
-        <RelativeLayout
-            android:layout_weight="3"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/offer_item_exclusive"
-                android:src="@drawable/icon_exclusive"
-                android:tint="@android:color/holo_orange_dark"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
+                android:id="@+id/offer_item_merchant_logo"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/offer_item_exclusive"
+                    android:src="@drawable/icon_exclusive"
+                    android:tint="@android:color/holo_orange_dark"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_alignRight="@id/offer_item_exclusive"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:id="@+id/offer_item_merchant_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@null"/>
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:id="@+id/offer_item_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@null"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/offer_code_container"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/offer_code_reveal"
+                android:text="@string/reveal_code"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/offer_code"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignRight="@id/offer_item_exclusive"
-                android:orientation="vertical">
+                android:textIsSelectable="true"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:visibility="invisible" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:id="@+id/offer_item_merchant_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@null"/>
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:id="@+id/offer_item_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@null"/>
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/offer_code_container"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
         <Button
-            android:id="@+id/reveal_code"
-            android:text="@string/reveal_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/offer_code"
+            android:id="@+id/offer_show_more"
+            android:text="@string/show_more"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true" />
+            android:visibility="gone" />
+
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/show_more"
-        android:text="@string/show_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</ScrollView>

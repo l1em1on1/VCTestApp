@@ -1,5 +1,7 @@
 package pl.ndev.vctestapp.offers;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import pl.ndev.vctestapp.utils.Formatter;
  * Created by l1em1on1 on 14/06/2015.
  */
 public class Item {
+    public static Location NEAREST_LOCATION = null;
 
     public String id;
 
@@ -34,6 +37,24 @@ public class Item {
         // ­android@1.5x #HDPI
         // ­android@2x #XHDPI
         return urlModifier != null ? merchantLogo.replaceAll("(.+)(\\.[^\\.]+)$", String.format("$1%s$2", urlModifier)) : merchantLogo;
+    }
+
+    public LocationItem getNearestOfferLocation(Location location) {
+        LocationItem nearestLocationItem = null;
+        double distance = -1;
+
+        for (LocationItem locationItem : locations) {
+            float [] lastDistance = new float[1];
+            Location.distanceBetween(locationItem.latitude, locationItem.longitude, location.getLatitude(), location.getLongitude(), lastDistance);
+
+            if (distance >= 0 && lastDistance[0] > distance)
+                continue;
+
+            distance = lastDistance[0];
+            nearestLocationItem = locationItem;
+        }
+
+        return nearestLocationItem;
     }
 
     @Override

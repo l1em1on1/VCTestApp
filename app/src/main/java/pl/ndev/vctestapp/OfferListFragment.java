@@ -2,7 +2,7 @@ package pl.ndev.vctestapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
@@ -18,8 +18,6 @@ import pl.ndev.vctestapp.offers.ParseTask;
 import pl.ndev.vctestapp.offers.Request;
 
 public class OfferListFragment extends ListFragment implements ParseTask.TaskCallback {
-
-
 
     private Callbacks mCallbacks;
 
