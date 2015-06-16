@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="offers_api">http://hosted.vouchercodes.co.uk/careers/tests/mobile/api/offers.json</string>
-
 </resources>

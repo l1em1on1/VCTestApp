@@ -23,18 +23,14 @@ public class OfferListActivity extends AppCompatActivity implements OfferListFra
     }
 
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String offerId) {
         if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putString(OfferDetailFragment.ARG_ITEM_ID, id);
-            OfferDetailFragment fragment = new OfferDetailFragment();
-            fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.offer_detail_container, fragment)
+                    .replace(R.id.offer_detail_container, OfferDetailFragment.newInstance(getIntent().getStringExtra(OfferDetailFragment.ARG_ITEM_ID)))
                     .commit();
         } else {
             Intent detailIntent = new Intent(this, OfferDetailActivity.class);
-            detailIntent.putExtra(OfferDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(OfferDetailFragment.ARG_ITEM_ID, offerId);
             startActivity(detailIntent);
         }
     }

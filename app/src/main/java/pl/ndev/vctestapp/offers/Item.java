@@ -1,7 +1,5 @@
 package pl.ndev.vctestapp.offers;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +29,11 @@ public class Item {
         return id;
     }
 
-    public String getMerchantLogo(Context context) {
+    public String getMerchantLogo(String urlModifier) {
         // ­android #MDPI
         // ­android@1.5x #HDPI
         // ­android@2x #XHDPI
-        return merchantLogo;
+        return urlModifier != null ? merchantLogo.replaceAll("(.+)(\\.[^\\.]+)$", String.format("$1%s$2", urlModifier)) : merchantLogo;
     }
 
     @Override

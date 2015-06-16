@@ -1,62 +1,79 @@
 package pl.ndev.vctestapp;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import pl.ndev.vctestapp.offers.Container;
 import pl.ndev.vctestapp.offers.Item;
 
-/**
- * A fragment representing a single Offer detail screen.
- * This fragment is either contained in a {@link OfferListActivity}
- * in two-pane mode (on tablets) or a {@link OfferDetailActivity}
- * on handsets.
- */
-public class OfferDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
+public class OfferDetailFragment extends Fragment implements OnMapReadyCallback {
+
     public static final String ARG_ITEM_ID = "item_id";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private Item mItem;
+    private Item offerItem;
+    private String logoUrlModifier;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public OfferDetailFragment() {
+    public static OfferDetailFragment newInstance(String offerId) {
+        OfferDetailFragment fragment = new OfferDetailFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_ITEM_ID, offerId);
+        fragment.setArguments(args);
+
+        return fragment;
     }
+
+    public OfferDetailFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = Container.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            offerItem = Container.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        this.logoUrlModifier = activity.getString(R.string.logo_url_modifier);
+
+        MapFragment mapFragment = (MapFragment) activity.getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_offer_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.offer_detail)).setText(mItem.offerTitle);
+        if (offerItem != null) {
+            ((TextView) rootView.findViewById(R.id.offer_item_merchant_name)).setText(offerItem.merchantName);
+            ((TextView) rootView.findViewById(R.id.offer_item_title)).setText(offerItem.offerTitle);
+
+            Glide.with(getActivity())
+                    .load(offerItem.getMerchantLogo(logoUrlModifier))
+                    .dontAnimate().fitCenter().into((ImageView) rootView.findViewById(R.id.offer_item_merchant_logo));
+
+            rootView.findViewById(R.id.offer_item_exclusive).setVisibility(offerItem.isExclusive ? View.VISIBLE : View.GONE);
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }

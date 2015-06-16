@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Voucher Codes Test</string>
     <string name="title_offer_detail">Offer Detail</string>
+    <string name="show_more">Show More</string>
+    <string name="reveal_code">Reveal Code</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

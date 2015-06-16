@@ -16,9 +16,11 @@ public class ListAdapter extends BaseAdapter
 {
 
     private Context context;
+    private String logoUrlModifier;
 
     public ListAdapter(Context context) {
         this.context = context;
+        this.logoUrlModifier = context.getString(R.string.logo_url_modifier);
     }
 
     static class ViewHolder
@@ -26,7 +28,6 @@ public class ListAdapter extends BaseAdapter
         TextView merchantNameView;
         TextView offerTitleView;
 
-        ImageView featuredImageView;
         ImageView merchantLogoView;
 
         ImageView exclusiveView;
@@ -58,7 +59,6 @@ public class ListAdapter extends BaseAdapter
 
             viewHolder.merchantNameView = (TextView) convertView.findViewById(R.id.offer_item_merchant_name);
             viewHolder.offerTitleView = (TextView) convertView.findViewById(R.id.offer_item_title);
-            viewHolder.featuredImageView = (ImageView) convertView.findViewById(R.id.offer_item_featured_image);
             viewHolder.merchantLogoView = (ImageView) convertView.findViewById(R.id.offer_item_merchant_logo);
             viewHolder.exclusiveView = (ImageView) convertView.findViewById(R.id.offer_item_exclusive);
 
@@ -74,13 +74,7 @@ public class ListAdapter extends BaseAdapter
             viewHolder.merchantNameView.setText(offer.merchantName);
             viewHolder.offerTitleView.setText(offer.offerTitle);
 
-            Glide.with(context).load(offer.getMerchantLogo(context)).dontAnimate().fitCenter().into(viewHolder.merchantLogoView);
-
-            viewHolder.featuredImageView.setVisibility(View.VISIBLE);
-            if (offer.featuredImage != null) {
-                viewHolder.featuredImageView.setVisibility(View.GONE);
-                Glide.with(context).load(offer.featuredImage).dontAnimate().centerCrop().into(viewHolder.featuredImageView);
-            }
+            Glide.with(context).load(offer.getMerchantLogo(logoUrlModifier)).dontAnimate().fitCenter().into(viewHolder.merchantLogoView);
 
             viewHolder.exclusiveView.setVisibility(offer.isExclusive ? View.VISIBLE : View.GONE);
         }

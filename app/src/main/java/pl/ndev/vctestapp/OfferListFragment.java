@@ -1,22 +1,13 @@
 package pl.ndev.vctestapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import com.squareup.okhttp.Cache;
-import com.squareup.okhttp.CacheControl;
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -24,11 +15,11 @@ import pl.ndev.vctestapp.offers.Container;
 import pl.ndev.vctestapp.offers.Item;
 import pl.ndev.vctestapp.offers.ListAdapter;
 import pl.ndev.vctestapp.offers.ParseTask;
-import pl.ndev.vctestapp.utils.ConnectionDetector;
+import pl.ndev.vctestapp.offers.Request;
 
 public class OfferListFragment extends ListFragment implements ParseTask.TaskCallback {
 
-    private static final long HTTP_CACHE_SIZE = 10 * 1024 * 1024;
+
 
     private Callbacks mCallbacks;
 
@@ -40,39 +31,15 @@ public class OfferListFragment extends ListFragment implements ParseTask.TaskCal
 
     private final OkHttpClient client = new OkHttpClient();
 
-    public static Cache createHttpClientCache(Context context) {
-        File cacheDir = context.getDir("service_api_cache", Context.MODE_PRIVATE);
-
-        return new Cache(cacheDir, HTTP_CACHE_SIZE);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Request.Builder requestBuilder = new Request.Builder()
-                .header("Accept", "application/json")
-                .url(getString(R.string.offers_api));
-
-        if (ConnectionDetector.isInternetAvailable(this.getActivity())) {
-            // refreshing the content in case there are some new offers.
-            requestBuilder = requestBuilder.cacheControl(CacheControl.FORCE_NETWORK);
+        if (Container.ITEMS.size() == 0) {
+            Request.loadOffers(client, this.getActivity(), this);
+        } else {
+            this.onTaskFinished(null, Container.ITEMS);
         }
-
-        client.setCache(createHttpClientCache(this.getActivity()));
-        client.newCall(requestBuilder.build()).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                Log.d("OfferListFragment", e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                new ParseTask(OfferListFragment.this).execute(response.body().string());
-            }
-        });
     }
 
     @Override
@@ -107,7 +74,7 @@ public class OfferListFragment extends ListFragment implements ParseTask.TaskCal
         super.onListItemClick(listView, view, position, id);
 
         if (mCallbacks != null) {
-            mCallbacks.onItemSelected(Container.ITEMS.get(position).id);
+            mCallbacks.onItemSelected(Container.mapItem(position).getId());
         }
     }
 

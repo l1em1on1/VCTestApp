@@ -7,16 +7,23 @@ import java.util.Map;
 
 public class Container {
 
-    public static List<Item> ITEMS = new LinkedList<Item>();
+    public static List<Item> ITEMS = new LinkedList<>();
 
-    public static Map<String, Item> ITEM_MAP = new HashMap<String, Item>();
+    public static Map<String, Item> ITEM_MAP = new HashMap<>();
 
-    private static void addItem(Item item) {
-        ITEMS.add(item);
-        ITEM_MAP.put(item.getId(), item);
+    public static Item mapItem(int position) {
+        Item item;
+        try {
+            item = ITEMS.get(position);
+            ITEM_MAP.put(item.getId(), item);
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            item = null;
+        }
+
+        return item;
     }
 
-    private static Item getItem(String key) {
+    public static Item getItem(String key) {
         return ITEM_MAP.containsKey(key) ? ITEM_MAP.get(key) : null;
     }
 }
